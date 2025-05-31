@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
 
 
 
-  // Verificar si hay una sesión guardada al cargar la aplicación
+
   useEffect(() => {
     const savedUser = localStorage.getItem('user');
     const savedAuth = localStorage.getItem('isAuth');
@@ -24,19 +24,19 @@ export const AuthProvider = ({ children }) => {
         setUser(JSON.parse(savedUser));
         setIsAuth(true);
       } catch (error) {
-        // Si hay error al parsear, limpiar localStorage
+    
         localStorage.removeItem('user');
         localStorage.removeItem('isAuth');
       }
     }
   }, []);
 
-  // Función para limpiar errores
+
   const clearErrors = () => {
     setErrors({});
   };
 
-  // Función para validar el formulario
+
   const validateForm = () => {
     let validationErrors = {};
 
@@ -65,10 +65,10 @@ export const AuthProvider = ({ children }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Limpiar errores previos
+
     clearErrors();
 
-    // Validar formulario
+
     if (!validateForm()) {
       return { success: false, message: 'Datos inválidos' };
     }
@@ -99,15 +99,16 @@ export const AuthProvider = ({ children }) => {
       );
 
       if (!foundUser) {
+        alert('Credenciales incorrectas');
         setErrors({ general: 'Credenciales inválidas' });
         setIsLoading(false);
         return { success: false, message: 'Credenciales inválidas' };
       }
 
-      // Login exitoso
+
       console.log('User role:', foundUser.role);
 
-      // Guardar datos del usuario (sin la contraseña)
+     
       const userForStorage = {
         id: foundUser.id,
         email: foundUser.email,
@@ -115,19 +116,19 @@ export const AuthProvider = ({ children }) => {
         name: foundUser.name || foundUser.email
       };
 
-      // Actualizar estados
+
       setUser(userForStorage);
       setIsAuth(true);
 
-      // Guardar en localStorage para persistir la sesión
+   
       localStorage.setItem('user', JSON.stringify(userForStorage));
       localStorage.setItem('isAuth', 'true');
 
-      // Limpiar formulario
+    
       setEmail('');
       setPassword('');
 
-      // Navegar según el rol
+  
       if (foundUser.role === 'admin') {
         navigate('/admin');
       } else {
@@ -147,7 +148,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Función para cerrar sesión
+
   const logout = () => {
     setUser(null);
     setIsAuth(false);
@@ -155,25 +156,25 @@ export const AuthProvider = ({ children }) => {
     setPassword('');
     setErrors({});
 
-    // Limpiar localStorage
+
     localStorage.removeItem('user');
     localStorage.removeItem('isAuth');
 
     navigate('/login');
   };
 
-  // Función para verificar si el usuario tiene un rol específico
+
   const hasRole = (role) => {
     return user && user.role === role;
   };
 
-  // Función para verificar si el usuario está autenticado
+
   const checkAuth = () => {
     return isAuth && user;
   };
 
   const value = {
-    // Estados
+
     email,
     setEmail,
     password,
@@ -185,7 +186,6 @@ export const AuthProvider = ({ children }) => {
     user,
     isLoading,
 
-    // Funciones
     handleSubmit,
     logout,
     clearErrors,
@@ -200,7 +200,7 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-// Hook personalizado con validación
+
 export const useAuth = () => {
   const context = useContext(AuthContext);
 

@@ -14,7 +14,7 @@ export const CartProvider = ({ children }) => {
     const fetchProducts = async () => {
         try {
             setCargando(true)
-            setError(false) // Reset error state
+            setError(false) 
             
             const res = await fetch('https://dummyjson.com/products')
             
@@ -42,21 +42,21 @@ export const CartProvider = ({ children }) => {
             const productInCart = prevCart.find((item) => item.id === product.id);
 
             if (productInCart) {
-                // Incrementar cantidad existente
                 return prevCart.map((item) =>
                     item.id === product.id
                         ? { ...item, cantidad: item.cantidad + (product.cantidad || 1) }
                         : item
                 );
             } else {
-                // Agregar nuevo producto
                 return [...prevCart, { ...product, cantidad: product.cantidad || 1 }];
             }
         });
+
+        alert(`¡${product.title || 'Producto'} se ha agregado correctamente al carrito!`);
     };
 
 
-    const handleDeleteFromCart = (product) => {
+    const deleteFromCart = (product) => {
         setCart(prevCart => {
             return prevCart
                 .map(item => {
@@ -75,7 +75,7 @@ export const CartProvider = ({ children }) => {
         <CartContext.Provider
             value={
 
-                { cart, productos, cargando, error, add2Cart, handleDeleteFromCart, isAuthenticated, setIsAuth }
+                { cart, productos, cargando, error, add2Cart, deleteFromCart, isAuthenticated, setIsAuth }
             }>
             {children}
         </CartContext.Provider>

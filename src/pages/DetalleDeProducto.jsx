@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
-import Header from '../components/estaticos/Header'
-import Footer from '../components/estaticos/Footer'
+import Header from '../page-layout/Header'
+import Footer from '../page-layout/Footer'
 import { CartContext } from '../context/CartContext'
 import ProductDetail from '../components/ProductDetail'
 const DetalleDeProducto = () => {

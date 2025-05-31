@@ -1,11 +1,16 @@
 import React, { useContext } from 'react'
-import './styleCart.css'
+import './Cart.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { CartContext } from '../context/CartContext'
 const Cart = ({ isOpen, onClose, }) => {
 
-    const { cart, handleDeleteFromCart, } = useContext(CartContext)
+    const { cart, deleteFromCart, } = useContext(CartContext)
 
-    // console.log(cart);
+    const handleFinalizarCompra = () => {
+        alert("Compra realizada con éxito");
+    }
+    
 
     return (
         <div className={`cart-drawer ${isOpen ? 'open' : ''}`}>
@@ -17,19 +22,19 @@ const Cart = ({ isOpen, onClose, }) => {
             <div className="container">
 
             <div className="cart-content">
-                {cart.length === 0 ? (<p style={{ color: 'red' }}>El carrito esta vacío</p>) : (<><ul className='cart-item'>
+                {cart.length === 0 ? (<p style={{ color: 'red' }}>Carrito vacío</p>) : (<><ul className='cart-item ps-3'>
                     {cart.map((item, index) => (
 
-                        <li key={item.id} style={{ color: 'black' }}>
-                            {item.id} - {item.title} - {item.price} - {item.cantidad}
-                            <button className="btn btn-outline" onClick={() => handleDeleteFromCart(item)}><i className="fa-solid fa-trash"></i></button>
+                        <li key={item.id} className="border-bottom border-secondary">
+                            <p className="my-2">{item.title} ${item.price} - <small>Cant.: </small> {item.cantidad}
+                            <a className="px-2 link-secondary" onClick={() => deleteFromCart(item)}><FontAwesomeIcon icon={faTrash} /></a></p>
                         </li>
 
                     ))}
                 </ul>
-                    <div className='cart-footer'>
-                        <p style={{ color: 'blue' }}>Total: ${cart.reduce((total, item) => total + (item.price * item.cantidad), 0)}</p>
-                        <button className='btnCheckout'>Finalizar Compra</button>
+                    <div className='cart-footer pt-2'>
+                        <p className="text-primary lead fw-medium mb-4">Total: ${cart.reduce((total, item) => total + (item.price * item.cantidad), 0).toFixed(2)}</p>
+                        <button className='btn btn-primary' onClick={handleFinalizarCompra} >Finalizar Compra</button>
                     </div>
                 </>)}
 

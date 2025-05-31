@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import Header from '../components/estaticos/Header'
-import Footer from '../components/estaticos/Footer'
+import Header from '../page-layout/Header'
+import Footer from '../page-layout/Footer'
 
 const Page404 = () => {
   return (

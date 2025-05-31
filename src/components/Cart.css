@@ -35,13 +35,3 @@
     font-size: 20px;
     cursor: pointer;
 }
-
-.cart-item{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px 0;
-    border-bottom: 1px solid #ddd;
-}
-

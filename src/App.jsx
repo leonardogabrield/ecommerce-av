@@ -13,7 +13,8 @@ import Page404 from './pages/Page404';
 import DetalleDeProducto from './pages/DetalleDeProducto';
 
 function App() {
-  const { cart, productos, cargando, error, handleAddToCart, handleDeleteFromCart, isAuthenticated } = useContext(CartContext)
+  
+  const { isAuthenticated } = useContext(CartContext)
 
   return (
 

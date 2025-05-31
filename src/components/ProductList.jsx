@@ -10,7 +10,7 @@ const ProductList = () => {
         return (
             <>
                 <h2 className="h2 text-center mb-4 fw-normal">Listado de productos</h2>
-                <p className="text-center text-muted">No hay productos disponibles</p>
+                <p className="text-center text-muted">No hay productos para mostrar</p>
             </>
         )
     }

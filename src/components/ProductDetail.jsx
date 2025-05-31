@@ -44,7 +44,7 @@ const ProductDetail = () => {
           
           
           <div className="col-md-6">
-              <h2 className="display-3 text-start">{product.title}</h2>
+              <h2 className="display-3 text-start mt-5">{product.title}</h2>
               <p className="text-muted mb-4">SKU: {product.sku}</p>
               <div className="mb-3">
                 <span className="h4 me-2">${product.price}</span>

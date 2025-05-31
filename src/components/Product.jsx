@@ -63,7 +63,7 @@ const Product = ({ producto }) => {
             </button>
           </>
         ) : (
-          <p className="text-danger">Sin stock disponible</p>
+          <p className="text-danger">Sin stock</p>
         )}
         
         <Link to={`/producto/${producto.id}`} className="small mt-3">

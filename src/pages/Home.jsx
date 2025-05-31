@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
-import Header from '../components/estaticos/Header'
-import Footer from '../components/estaticos/Footer'
+import Header from '../page-layout/Header'
+import Footer from '../page-layout/Footer'
 import ProductList from '../components/ProductList'
 import { CartContext } from '../context/CartContext'
 
@@ -14,7 +14,7 @@ const Home = () => {
       <Header />
       <div className="container">
         <main>
-          <h1 className="display-3 text-center mx-5 pb-5">E-Commerce Online</h1>
+          <h1 className="display-3 text-center mx-5 pb-5 mt-5">E-Commerce Online</h1>
           {
             cargando ?
 

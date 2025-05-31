@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import Cart from '../Cart'
+import Cart from '../components/Cart'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faShoppingCart, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 
@@ -9,11 +9,11 @@ const Header = () => {
   const [isCartOpen, setCartOpen] = useState(false)
 
   return (
-    <header>
+    <header className="bg-dark">
 
+<div className="container">
 
-
-      <nav className="bg-dark d-flex py-4" data-bs-theme="dark">
+      <nav className="d-flex py-4" data-bs-theme="dark">
 
         <ul className="nav me-auto gap-4 align-items-center">
           <li className="nav-item">
@@ -35,7 +35,7 @@ const Header = () => {
 
         <ul className="nav ms-auto align-items-center">
           <li className="nav-item">
-            <button className="btn btn-outline" onClick={() => setCartOpen(true)}><FontAwesomeIcon icon={faShoppingCart} /></button>
+            <button className="nav-link" onClick={() => setCartOpen(true)}><FontAwesomeIcon icon={faShoppingCart} /></button>
             <Cart isOpen={isCartOpen} onClose={() => setCartOpen(false)} />
           </li>
           <li className="nav-item">
@@ -48,7 +48,7 @@ const Header = () => {
 
       </nav>
 
-
+    </div>
 
 
     </header>
