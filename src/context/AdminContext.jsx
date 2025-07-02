@@ -38,9 +38,9 @@ export const AdminProvider = ({ children }) => {
         }
     }
 
-    const agregarProducto = async (producto) => {
+    const addProducto = async (producto) => {
         try {
-            const res = await fetch('https://68646e895b5d8d03397d3426.mockapi.io/api/productos', {
+            const res = await fetch(apiUrl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -52,19 +52,24 @@ export const AdminProvider = ({ children }) => {
             }
             const data = await res.json()
             Swal.fire({
-                title: ":)!",
-                text: "Producto agregado correctamente!",
+                title: "Producto Agregado",
+                text: "El producto se ha agregado correctamente!",
                 icon: "success"
             });
             cargarProductos()
             setOpen(false)
         } catch (error) {
             console.log(error.message);
+            Swal.fire({
+                title: "Error",
+                text: "Hubo un problema al agregar el producto",
+                icon: "error"
+            });
 
         }
     }
 
-    const actulizarProducto = async (producto) => {
+    const updateProducto = async (producto) => {
         try {
             const res = await fetch(`${apiUrl}/${producto.id}`,
                 {
@@ -76,33 +81,55 @@ export const AdminProvider = ({ children }) => {
                 })
             if (!res.ok) throw Error('Error al actualizar el producto')
             const data = await res.json()
-            alert('Producto actualizado correctamente')
+            Swal.fire({
+                title: "Producto Actualizado",
+                text: "El producto se ha actualizado correctamente!",
+                icon: "success"
+            });
             setOpenEditor(false)
             setSeleccionado(null)
             cargarProductos()
         } catch (error) {
             console.log(error.message);
+            Swal.fire({
+                title: "Error",
+                text: "Hubo un problema al actualizar el producto",
+                icon: "error"
+            });
 
         }
     }
 
-    const eliminarProducto = async (id) => {
-        const confirmar = window.confirm('Estas seguro de eliminar el producto?')
-        if (confirmar) {
+    const removeProducto = async (id) => {
+ 
+        const confirmar = await Swal.fire({
+            title: '¿Está seguro de eliminar el producto?',
+            text: "¡No podrás revertir esta acción!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        });
+
+        if (confirmar.isConfirmed) {
             try {
-                const res = await fetch(`https://68646e895b5d8d03397d3426.mockapi.io/api/productos/${id}`, {
+                const res = await fetch(`${apiUrl}/${id}`, {
                     method: 'DELETE',
                 })
                 if (!res.ok) throw Error('Error al eliminar')
-                
+
                 Swal.fire({
-                    title: ":(!",
-                    text: "Producto Eliminado correctamente!",
-                    icon: "error"
+                    title: "Producto Eliminado",
+                    text: "El producto se ha eliminado correctamente!",
                 });
                 cargarProductos()
             } catch (error) {
-                alert('Hubo un problema al eliminar el producto')
+                /*alert('Hubo un problema al eliminar el producto')*/
+                Swal.fire({
+                    title: "Error",
+                    text: "Hubo un problema al eliminar el producto",
+                    icon: "error"
+                });
             }
         }
     }
@@ -117,9 +144,9 @@ export const AdminProvider = ({ children }) => {
             setOpenEditor,
             seleccionado,
             setSeleccionado,
-            agregarProducto,
-            actulizarProducto,
-            eliminarProducto,
+            addProducto,
+            updateProducto,
+            removeProducto,
         }}>
             {children}
         </AdminContext.Provider>

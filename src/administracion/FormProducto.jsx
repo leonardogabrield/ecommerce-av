@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 
 function FormProducto({ onAdd }) {
+
     const [producto, setProducto] = useState({
         title: '',
         description: '',
         price: '',
         stock: '',
-        images: [''],
+        images: [],
         sku: '',
     });
     const [errores, setErrores] = useState({});
@@ -21,18 +22,34 @@ function FormProducto({ onAdd }) {
         }
     };
 
-
     const checkFormulario = () => {
         const nuevosErrores = {};
+
         if (!producto.title.trim()) {
             nuevosErrores.title = 'El nombre es obligatorio.';
         }
-        if (!producto.price || producto.precio <= 0) {
+
+        if (!producto.price || parseFloat(producto.price) <= 0 || isNaN(parseFloat(producto.price))) {
             nuevosErrores.price = 'El precio debe ser mayor a 0.';
         }
+
         if (!producto.description.trim()) {
-            nuevosErrores.description = 'La descripción es obligatoria';
+            nuevosErrores.description = 'La descripción es obligatoria.';
         }
+
+        if (producto.stock === '' || parseInt(producto.stock) < 0 || isNaN(parseInt(producto.stock))) {
+            nuevosErrores.stock = 'El stock debe ser un número mayor o igual a 0.';
+        }
+
+        if (!producto.sku.trim()) {
+            nuevosErrores.sku = 'El SKU es obligatorio.';
+        }
+
+        const validImages = producto.images.filter(img => img.trim() !== '');
+        if (validImages.length === 0) {
+            nuevosErrores.images = 'Debe proporcionar al menos una URL de imagen válida.';
+        }
+
         setErrores(nuevosErrores);
         return Object.keys(nuevosErrores).length === 0;
     };
@@ -42,15 +59,17 @@ function FormProducto({ onAdd }) {
         if (!checkFormulario()) {
             return;
         }
-        onAdd(producto); // Llamada a la función para agregar el producto
+        onAdd(producto);
         setProducto({
             title: '',
             description: '',
             price: '',
             stock: '',
-            images: [''],
+            images: [],
             sku: '',
-        }); // Limpiar el formulario
+        });
+
+        setErrores({});
     };
 
     return (
@@ -60,19 +79,19 @@ function FormProducto({ onAdd }) {
                 <label className="form-label">Nombre:</label>
                 <input className="form-control"
                     type="text" name="title" value={producto.title} onChange={handleChange} required />
-                {errores.title && <p style={{ color: 'red' }}>{errores.title}</p>}
+                {errores.title && <div className="text-danger">{errores.title}</div>}
             </div>
             <div className="mb-3">
                 <label className="form-label">Descripción:</label>
-                <input className="form-control"
+                <textarea className="form-control" rows="3"
                     type="text" name="description" value={producto.description} onChange={handleChange} required />
-                {errores.description && <p style={{ color: 'red' }}>{errores.description}</p>}
+                {errores.description && <div className="text-danger">{errores.description}</div>}
             </div>
             <div className="mb-3">
                 <label className="form-label">Precio:</label>
                 <input className="form-control" type="number" name="price" value={producto.price} onChange={handleChange} required
                     min="0" />
-                {errores.price && <p style={{ color: 'red' }}>{errores.price}</p>}
+                {errores.price && <div className="text-danger">{errores.price}</div>}
             </div>
 
             <div className="mb-3">
@@ -84,7 +103,7 @@ function FormProducto({ onAdd }) {
                     onChange={handleChange}
                     required
                 />
-                {errores.stock && <p style={{ color: 'red' }}>{errores.stock}</p>}
+                {errores.stock && <div className="text-danger">{errores.stock}</div>}
             </div>
             <div className="mb-3">
                 <label className="form-label">Imágenes URLs:</label>
@@ -94,8 +113,9 @@ function FormProducto({ onAdd }) {
                     value={producto.images.join(', ')}
                     onChange={handleChange}
                     required
+                    placeholder="https://ejemplo.com/imagen1.jpg, https://ejemplo.com/imagen2.jpg"
                 />
-                {errores.images && <p style={{ color: 'red' }}>{errores.images}</p>}
+                {errores.images && <div className="text-danger">{errores.images}</div>}
             </div>
             <div className="mb-3">
                 <label className="form-label">SKU:</label>
@@ -106,7 +126,7 @@ function FormProducto({ onAdd }) {
                     onChange={handleChange}
                     required
                 />
-                {errores.sku && <p style={{ color: 'red' }}>{errores.sku}</p>}
+                {errores.sku && <div className="text-danger">{errores.sku}</div>}
             </div>
 
             <button type="submit" className="btn btn-primary">Agregar</button>

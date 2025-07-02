@@ -3,11 +3,13 @@ import React, { useState, useEffect } from 'react';
 function FormEdicion({ productoSeleccionado, onUpdate }) {
     const [producto, setProducto] = useState(productoSeleccionado);
 
-    useEffect(()=>{
+    useEffect(() => {
         setProducto(productoSeleccionado)
-    },[productoSeleccionado])
+    }, [productoSeleccionado])
 
-     const handleChange = (e) => {
+
+
+    const handleChange = (e) => {
         const { name, value } = e.target;
 
         if (name === 'images') {
@@ -17,11 +19,34 @@ function FormEdicion({ productoSeleccionado, onUpdate }) {
         }
     };
 
+    const handleSubmit = (e) => {
+
+        e.preventDefault();
+
+        if (!producto.title || !producto.description || !producto.price || !producto.sku) {
+            alert('Por favor completa todos los campos requeridos');
+            return;
+        }
+
+        if (producto.price < 0) {
+            alert('El precio no puede ser negativo');
+            return;
+        }
+
+        onUpdate(producto);
+    };
+
+    if (!producto) {
+        return <div className="text-center">
+            <div className="spinner-border" role="status">
+                <span className="visually-hidden">cargando...</span>
+            </div>
+        </div>;
+    }
+
     return (
-        <form onSubmit={(e)=>{
-            e.preventDefault()
-            onUpdate(producto)
-        }}>
+        <form onSubmit={handleSubmit}>
+
             <h2>Editar Producto</h2>
             <div className="mb-3">
                 <label className="form-label">ID:</label>
@@ -45,7 +70,7 @@ function FormEdicion({ productoSeleccionado, onUpdate }) {
             </div>
             <div className="mb-3">
                 <label className="form-label">Descripción:</label>
-                <input className="form-control"
+                <textarea className="form-control" rows="3"
                     type="text"
                     name="description"
                     value={producto.description || ''}
@@ -82,6 +107,7 @@ function FormEdicion({ productoSeleccionado, onUpdate }) {
                     value={producto.images.join(', ')}
                     onChange={handleChange}
                     required
+                    placeholder="https://ejemplo1.com, https://ejemplo2.com"
                 />
             </div>
             <div className="mb-3">

@@ -20,9 +20,9 @@ const Admin = () => {
         setOpenEditor,
         seleccionado,
         setSeleccionado,
-        agregarProducto,
-        actulizarProducto,
-        eliminarProducto,
+        addProducto,
+        updateProducto,
+        removeProducto,
     } = useContext(AdminContext)
 
     const navigate = useNavigate()
@@ -61,12 +61,12 @@ const Admin = () => {
                         
                         <button className="addButton btn btn-primary mb-4 d-block me-0 ms-auto" onClick={() => setOpen(true)}>Agregar producto</button>
 
-                        <div className="row row-cols-1 row-cols-md-6 g-4">
+                        <div className="row row-cols-1 row-cols-md-6 g-5 mb-5">
 
                             {productos.map((product) => (
 
-                                <div class="col">
-                                    <div class="card h-100">
+                                <div className="col mb-3" key={product.id}>
+                                    <div className="card h-100 ">
 
                                         <img
                                             src={product.images[0]}
@@ -74,18 +74,18 @@ const Admin = () => {
                                             className="card-img-top"
                                         />
 
-                                        <div class="card-body">
-                                            <h5 class="card-title">{product.title}</h5>
-                                            <p class="card-text">${product.price}</p>
+                                        <div className="card-body">
+                                            <h5 className="card-title">{product.title}</h5>
+                                            <p className="card-text">${product.price}</p>
                                         </div>
-                                        <div class="card-footer">
+                                        <div className="card-footer">
                                             <div className="d-flex justify-content-between">
                                                 <button className="editButton btn btn-primary btn-sm" onClick={() => {
                                                     setOpenEditor(true)
                                                     setSeleccionado(product)
                                                 }}>Editar</button>
 
-                                                <button className="deleteButton btn btn-primary btn-sm" onClick={() => eliminarProducto(product.id)}>Eliminar</button>
+                                                <button className="deleteButton btn btn-primary btn-sm" onClick={() => removeProducto(product.id)}>Eliminar</button>
                                             </div>
                                         </div>
                                     </div>
@@ -99,8 +99,8 @@ const Admin = () => {
                     </>
                 )}
                 
-                {open && (<FormProducto onAdd={agregarProducto} />)}
-                {openEditor && (<FormEdicion productoSeleccionado={seleccionado} onUpdate={actulizarProducto} />)}
+                {open && (<FormProducto onAdd={addProducto} />)}
+                {openEditor && (<FormEdicion productoSeleccionado={seleccionado} onUpdate={updateProducto} />)}
             </div>
             <Footer />
         </>
