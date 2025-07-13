@@ -1,41 +1,46 @@
 import { createContext, useState, useEffect } from "react";
+import Swal from "sweetalert2";
 
 export const CartContext = createContext()
 
 export const CartProvider = ({ children }) => {
+
     const [cart, setCart] = useState([])
     const [productos, setProductos] = useState([])
     const [cargando, setCargando] = useState(true)
     const [error, setError] = useState(false)
-    const [isAuthenticated, setIsAuth] = useState(false)
-
 
     useEffect(() => {
-    const fetchProducts = async () => {
-        try {
-            setCargando(true)
-            setError(false) 
-            
-            const res = await fetch('https://dummyjson.com/products')
-            
-            if (!res.ok) {
-                throw new Error(`HTTP error! status: ${res.status}`)
-            }
-            
-            const datos = await res.json()
-            setProductos(datos.products)
-            
-        } catch (error) {
-            console.error('Error cargando productos')
-            setError(true)
-            setProductos([])
-        } finally {
-            setCargando(false)
-        }
-    }
+        const fetchProducts = async () => {
+            try {
+                setCargando(true)
+                setError(false)
 
-    fetchProducts()
-}, [])
+                const res = await fetch('https://dummyjson.com/products')
+
+                if (!res.ok) {
+                    throw new Error(`HTTP error! status: ${res.status}`)
+                }
+
+                const datos = await res.json()
+                setProductos(datos.products)
+
+            } catch (error) {
+                Swal.fire({
+                    title: 'Error en la carga',
+                    text: 'Error cargando los productos',
+                    icon: 'error',
+                    confirmButtonColor: "#0d6efd",
+                });
+                setError(true)
+                setProductos([])
+            } finally {
+                setCargando(false)
+            }
+        }
+
+        fetchProducts()
+    }, [])
 
     const add2Cart = (product) => {
         setCart(prevCart => {
@@ -52,7 +57,12 @@ export const CartProvider = ({ children }) => {
             }
         });
 
-        alert(`¡${product.title || 'Producto'} se ha agregado correctamente al carrito!`);
+        Swal.fire({
+            title: 'Producto Agregado',
+            text: `¡${product.title || 'El producto'} se ha agregado correctamente al carrito!`,
+            icon: 'success',
+            confirmButtonColor: "#0d6efd",
+        });
     };
 
 
@@ -75,7 +85,7 @@ export const CartProvider = ({ children }) => {
         <CartContext.Provider
             value={
 
-                { cart, productos, cargando, error, add2Cart, deleteFromCart, isAuthenticated, setIsAuth }
+                { cart, productos, cargando, error, add2Cart, deleteFromCart }
             }>
             {children}
         </CartContext.Provider>

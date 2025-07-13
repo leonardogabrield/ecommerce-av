@@ -35,6 +35,8 @@ function FormProducto({ onAdd }) {
 
         if (!producto.description.trim()) {
             nuevosErrores.description = 'La descripción es obligatoria.';
+        } else if (producto.description.trim().length < 10) {
+            nuevosErrores.description = 'La descripción debe tener al menos 10 caracteres.';
         }
 
         if (producto.stock === '' || parseInt(producto.stock) < 0 || isNaN(parseInt(producto.stock))) {
@@ -74,7 +76,6 @@ function FormProducto({ onAdd }) {
 
     return (
         <form onSubmit={handleSubmit}>
-            <h2>Agregar Producto</h2>
             <div className="mb-3">
                 <label className="form-label">Nombre:</label>
                 <input className="form-control"

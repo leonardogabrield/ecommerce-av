@@ -1,5 +1,4 @@
-import React, { useState, useContext } from 'react';
-import { CartContext } from '../context/CartContext';
+import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import Header from '../page-layout/Header'
 import Footer from '../page-layout/Footer'
@@ -7,10 +6,7 @@ import Footer from '../page-layout/Footer'
 
 const Login = () => {
 
-
-
-  const { setIsAuth } = useContext(CartContext);
-  const { email, setEmail, password, setPassword, handleSubmit } = useAuth();
+  const { email, setEmail, password, setPassword, handleSubmit, setIsAuth } = useAuth();
 
 
   const [errors, setErrors] = useState({

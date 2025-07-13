@@ -1,6 +1,5 @@
-import { useContext } from 'react'
+
 import { Routes, Route } from 'react-router-dom'
-import { CartContext } from './context/CartContext'
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Home from './pages/Home'
@@ -13,8 +12,6 @@ import Page404 from './pages/Page404';
 import DetalleDeProducto from './pages/DetalleDeProducto';
 
 function App() {
-  
-  const { isAuthenticated } = useContext(CartContext)
 
   return (
 
@@ -28,7 +25,7 @@ function App() {
 
       <Route path='/contacto' element={<Contacto />} />
 
-      <Route path='/admin' element={<RutasProtegidas isAuthenticated={isAuthenticated}> <Admin /> </RutasProtegidas>} />
+      <Route path="/admin" element={ <RutasProtegidas requiredRole="admin"> <Admin /></RutasProtegidas>}/>
 
       <Route path='/login' element={<Login />} />
 

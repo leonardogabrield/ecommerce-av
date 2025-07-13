@@ -46,8 +46,6 @@ function FormEdicion({ productoSeleccionado, onUpdate }) {
 
     return (
         <form onSubmit={handleSubmit}>
-
-            <h2>Editar Producto</h2>
             <div className="mb-3">
                 <label className="form-label">ID:</label>
                 <input className="form-control"
@@ -107,7 +105,7 @@ function FormEdicion({ productoSeleccionado, onUpdate }) {
                     value={producto.images.join(', ')}
                     onChange={handleChange}
                     required
-                    placeholder="https://ejemplo1.com, https://ejemplo2.com"
+                    placeholder="https://ejemplo.com/imagen1.jpg, https://ejemplo.com/imagen2.jpg"
                 />
             </div>
             <div className="mb-3">

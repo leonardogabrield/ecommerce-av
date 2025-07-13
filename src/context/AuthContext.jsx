@@ -2,8 +2,8 @@ import { createContext, useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext();
-
 export const AuthProvider = ({ children }) => {
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
@@ -12,30 +12,25 @@ export const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-
-
+  const [isInitializing, setIsInitializing] = useState(true);
 
   useEffect(() => {
-    const savedUser = localStorage.getItem('user');
-    const savedAuth = localStorage.getItem('isAuth');
 
-    if (savedUser && savedAuth === 'true') {
-      try {
-        setUser(JSON.parse(savedUser));
-        setIsAuth(true);
-      } catch (error) {
-    
-        localStorage.removeItem('user');
-        localStorage.removeItem('isAuth');
-      }
+    const isAuthenticated = localStorage.getItem('isAuth') === 'true';
+    const storedUser = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
+    const isAdmin = storedUser?.role === 'admin';
+
+    if (isAuthenticated && isAdmin) {
+      setIsAuth(true);
+      setUser(storedUser);
     }
-  }, []);
 
+    setIsInitializing(false);
+  }, [])
 
   const clearErrors = () => {
     setErrors({});
   };
-
 
   const validateForm = () => {
     let validationErrors = {};
@@ -60,14 +55,10 @@ export const AuthProvider = ({ children }) => {
     return true;
   };
 
-
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-
     clearErrors();
-
 
     if (!validateForm()) {
       return { success: false, message: 'Datos inválidos' };
@@ -105,10 +96,8 @@ export const AuthProvider = ({ children }) => {
         return { success: false, message: 'Credenciales inválidas' };
       }
 
-
       console.log('User role:', foundUser.role);
 
-     
       const userForStorage = {
         id: foundUser.id,
         email: foundUser.email,
@@ -120,15 +109,15 @@ export const AuthProvider = ({ children }) => {
       setUser(userForStorage);
       setIsAuth(true);
 
-   
+
       localStorage.setItem('user', JSON.stringify(userForStorage));
       localStorage.setItem('isAuth', 'true');
 
-    
+
       setEmail('');
       setPassword('');
 
-  
+
       if (foundUser.role === 'admin') {
         navigate('/admin');
       } else {
@@ -150,12 +139,12 @@ export const AuthProvider = ({ children }) => {
 
 
   const logout = () => {
+
     setUser(null);
     setIsAuth(false);
     setEmail('');
     setPassword('');
     setErrors({});
-
 
     localStorage.removeItem('user');
     localStorage.removeItem('isAuth');
@@ -174,23 +163,22 @@ export const AuthProvider = ({ children }) => {
   };
 
   const value = {
-
     email,
-    setEmail,
     password,
-    setPassword,
     errors,
-    setErrors,
     isAuth,
-    setIsAuth,
     user,
     isLoading,
-
+    isInitializing,
     handleSubmit,
     logout,
     clearErrors,
     hasRole,
-    checkAuth
+    checkAuth,
+    setIsAuth,
+    setErrors,
+    setPassword,
+    setEmail
   };
 
   return (

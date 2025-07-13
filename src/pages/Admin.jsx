@@ -1,16 +1,12 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import Header from '../page-layout/Header'
 import Footer from '../page-layout/Footer'
 import FormEdicion from '../administracion/FormEdicion';
 import FormProducto from '../administracion/FormProducto';
 import { useNavigate } from "react-router-dom";
-import { CartContext } from "../context/CartContext";
 import { AdminContext } from "../context/AdminContext";
 
 const Admin = () => {
-
-    const { setIsAuth } = useContext(CartContext)
-
     const {
         productos,
         cargando,
@@ -32,38 +28,21 @@ const Admin = () => {
             <Header />
             <div className="container">
                 {cargando ? (
-                    <div className="text-center">
+                    <div className="text-center mt-5">
                         <div className="spinner-border" role="status">
                             <span className="visually-hidden">cargando...</span>
                         </div>
                     </div>
                 ) : (
                     <>
-                        {/*  <nav>
-                        <ul className="nav">
-                            <li className="navItem">
-                                <button className="navButton" onClick={() => {
-                                    setIsAuth(false);
-                                    navigate('/');
-                                    localStorage.removeItem('isAuth');
-                                }}>
-                                    <i className="fa-solid fa-right-from-bracket"></i>
-                                </button>
-                            </li>
-                            <li className="navItem">
-                                <a href="/admin">Admin</a>
-                            </li>
-                        </ul>
-                    </nav> */}
+
                         <h1 className="display-3 text-center mx-5 my-5">Panel Administración</h1>
 
-
-                        
-                        <button className="addButton btn btn-primary mb-4 d-block me-0 ms-auto" onClick={() => setOpen(true)}>Agregar producto</button>
+                        <button className="addButton btn btn-primary mb-4 d-block mx-auto" onClick={() => setOpen(true)}>Agregar producto</button>
 
                         <div className="row row-cols-1 row-cols-md-6 g-5 mb-5">
 
-                            {productos.map((product) => (
+                            { productos.map((product) => (
 
                                 <div className="col mb-3" key={product.id}>
                                     <div className="card h-100 ">
@@ -91,17 +70,62 @@ const Admin = () => {
                                     </div>
                                 </div>
 
-                            ))}
+                            ))
+                            
+                            
+                            }
 
                         </div>
 
-
                     </>
                 )}
-                
-                {open && (<FormProducto onAdd={addProducto} />)}
-                {openEditor && (<FormEdicion productoSeleccionado={seleccionado} onUpdate={updateProducto} />)}
+
+                {open && (
+                    <div className="modal show d-block" tabIndex="-1">
+                        <div className="modal-dialog">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <h1 className="modal-title fs-3" id="agregarProductoModal">Agregar Producto</h1>
+                                    <button type="button" onClick={() => setOpen(false)} className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div className="modal-body">
+                                    <FormProducto onAdd={addProducto} />
+                                </div>
+                                <div className="modal-footer">
+                                </div>
+                            </div>
+                        </div>
+                        <div className="modal-backdrop fade show z-n1"></div>
+                    </div>
+                )}
+
+
+                {openEditor && (
+
+
+                    <div className="modal show d-block" tabIndex="-1">
+                        <div className="modal-dialog">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <h1 className="modal-title fs-3" id="editarProductoModal">Editar Producto</h1>
+                                    <button type="button" onClick={() => setOpenEditor(false)} className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div className="modal-body">
+                                    <FormEdicion productoSeleccionado={seleccionado} onUpdate={updateProducto} />
+                                </div>
+                                <div className="modal-footer">
+                                </div>
+                            </div>
+                        </div>
+                        <div className="modal-backdrop fade show z-n1"></div>
+                    </div>
+
+
+                )}
             </div>
+
+
+
             <Footer />
         </>
 

@@ -4,7 +4,7 @@ export const AdminContext = createContext()
 
 export const AdminProvider = ({ children }) => {
     const [productos, setProductos] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [cargando, setCargando] = useState(true);
     const [open, setOpen] = useState(false)
     const [seleccionado, setSeleccionado] = useState(null)
     const [openEditor, setOpenEditor] = useState(false)
@@ -13,17 +13,17 @@ export const AdminProvider = ({ children }) => {
 
     useEffect(() => {
         fetch(apiUrl)
-            .then((response) => response.json())
+            .then((res) => res.json())
             .then((data) => {
                 setTimeout(() => {
                     setProductos(data);
-                    setLoading(false);
+                    setCargando(false);
                 }, 2000);
             })
             .catch((error) => {
                 console.error("Error fetching data:", error);
                 setError(true);
-                setLoading(false);
+                setCargando(false);
             });
     }, []);
 
@@ -54,7 +54,8 @@ export const AdminProvider = ({ children }) => {
             Swal.fire({
                 title: "Producto Agregado",
                 text: "El producto se ha agregado correctamente!",
-                icon: "success"
+                icon: "success",
+                confirmButtonColor: "#0d6efd",
             });
             cargarProductos()
             setOpen(false)
@@ -63,7 +64,8 @@ export const AdminProvider = ({ children }) => {
             Swal.fire({
                 title: "Error",
                 text: "Hubo un problema al agregar el producto",
-                icon: "error"
+                icon: "error",
+                confirmButtonColor: "#0d6efd",
             });
 
         }
@@ -84,7 +86,8 @@ export const AdminProvider = ({ children }) => {
             Swal.fire({
                 title: "Producto Actualizado",
                 text: "El producto se ha actualizado correctamente!",
-                icon: "success"
+                icon: "success",
+                confirmButtonColor: "#0d6efd",
             });
             setOpenEditor(false)
             setSeleccionado(null)
@@ -94,7 +97,8 @@ export const AdminProvider = ({ children }) => {
             Swal.fire({
                 title: "Error",
                 text: "Hubo un problema al actualizar el producto",
-                icon: "error"
+                icon: "error",
+                confirmButtonColor: "#0d6efd",
             });
 
         }
@@ -108,7 +112,8 @@ export const AdminProvider = ({ children }) => {
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Sí, eliminar',
-            cancelButtonText: 'Cancelar'
+            cancelButtonText: 'Cancelar',
+            confirmButtonColor: "#0d6efd",
         });
 
         if (confirmar.isConfirmed) {
@@ -121,14 +126,15 @@ export const AdminProvider = ({ children }) => {
                 Swal.fire({
                     title: "Producto Eliminado",
                     text: "El producto se ha eliminado correctamente!",
+                    confirmButtonColor: "#0d6efd",
                 });
                 cargarProductos()
             } catch (error) {
-                /*alert('Hubo un problema al eliminar el producto')*/
                 Swal.fire({
                     title: "Error",
                     text: "Hubo un problema al eliminar el producto",
-                    icon: "error"
+                    icon: "error",
+                    confirmButtonColor: "#0d6efd",
                 });
             }
         }
@@ -137,12 +143,12 @@ export const AdminProvider = ({ children }) => {
     return (
         <AdminContext.Provider value={{
             productos,
-            loading,
+            cargando,
             open,
-            setOpen,
             openEditor,
-            setOpenEditor,
             seleccionado,
+            setOpen,
+            setOpenEditor,
             setSeleccionado,
             addProducto,
             updateProducto,

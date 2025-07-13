@@ -14,7 +14,7 @@ const Home = () => {
       <Header />
       <div className="container">
         <main>
-          <h1 className="display-3 text-center mx-5 pb-5 mt-5">E-Commerce Online</h1>
+          <h1 className="display-3 text-center mx-5 pb-5 mt-5">OnlineShop</h1>
           {
             cargando ?
 
