@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useRef } from 'react'
 import Header from '../page-layout/Header'
 import Footer from '../page-layout/Footer'
 import ProductList from '../components/ProductList'
@@ -6,10 +6,13 @@ import { CartContext } from '../context/CartContext'
 const ListadoDeProductos = () => {
 
   const { cargando } = useContext(CartContext)
+  const refTopProductos = useRef(null)
 
   return (
     <>
-      <Header />
+      <div ref={refTopProductos} >
+        <Header />
+      </div>
       <div className="container">
         <main>
 
@@ -22,7 +25,7 @@ const ListadoDeProductos = () => {
               </div>
             </div> :
 
-              <ProductList />
+              <ProductList scrollRef={refTopProductos} />
           }
 
         </main>

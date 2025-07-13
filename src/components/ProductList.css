@@ -1,0 +1,9 @@
+.search-field {
+  width: 75%;
+}
+
+@media (min-width: 768px) {
+  .search-field {
+    width: 50%;
+  }
+}
