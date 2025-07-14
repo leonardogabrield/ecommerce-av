@@ -1,6 +1,8 @@
 import React, { useState, useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import { CartContext } from '../context/CartContext'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 
 
 const ProductDetail = () => {
@@ -73,7 +75,7 @@ const ProductDetail = () => {
             </div>
               </div>
               <button className="btn btn-primary btn-lg mb-3 me-2" onClick={handleAdd2Cart}>
-              Agregar al Carrito
+              Agregar <FontAwesomeIcon icon={faCartPlus} className="fs-5 ps-2" />
               </button>
             </div>
             

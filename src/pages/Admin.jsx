@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
 import Header from '../page-layout/Header'
 import Footer from '../page-layout/Footer'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faTrashAlt, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import FormEdicion from '../administracion/FormEdicion';
 import FormProducto from '../administracion/FormProducto';
-import { useNavigate } from "react-router-dom";
 import { AdminContext } from "../context/AdminContext";
 
 const Admin = () => {
@@ -21,8 +22,6 @@ const Admin = () => {
         removeProducto,
     } = useContext(AdminContext)
 
-    const navigate = useNavigate()
-
     return (
         <>
             <Header />
@@ -36,13 +35,15 @@ const Admin = () => {
                 ) : (
                     <>
 
-                        <h1 className="display-3 text-center mx-5 my-5">Panel Administración</h1>
+                        <h1 className="display-3 text-center mx-5 my-5">Panel de Administración</h1>
 
-                        <button className="addButton btn btn-primary mb-4 d-block mx-auto" onClick={() => setOpen(true)}>Agregar producto</button>
+                        <button className="addButton btn btn-primary btn-sm fs-6 mb-4 d-flex mx-auto justify-content-center align-items-center px-3" onClick={() => setOpen(true)}>
+                            Agregar producto <span className="ps-2 text-white fs-3"><FontAwesomeIcon icon={faPlusCircle} /></span>
+                        </button>
 
                         <div className="row row-cols-1 row-cols-md-6 g-5 mb-5">
 
-                            { productos.map((product) => (
+                            {productos.map((product) => (
 
                                 <div className="col mb-3" key={product.id}>
                                     <div className="card h-100 ">
@@ -59,20 +60,22 @@ const Admin = () => {
                                         </div>
                                         <div className="card-footer">
                                             <div className="d-flex justify-content-between">
-                                                <button className="editButton btn btn-primary btn-sm" onClick={() => {
+                                                <button className="editButton btn text-primary btn-sm fs-4" onClick={() => {
                                                     setOpenEditor(true)
                                                     setSeleccionado(product)
-                                                }}>Editar</button>
+                                                }}><FontAwesomeIcon icon={faEdit} title="Editar Producto" /></button>
 
-                                                <button className="deleteButton btn btn-primary btn-sm" onClick={() => removeProducto(product.id)}>Eliminar</button>
+                                                <button className="deleteButton btn text-primary fs-4" onClick={() => removeProducto(product.id)} title="Eliminar Producto">
+                                                    <FontAwesomeIcon icon={faTrashAlt} />
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
                             ))
-                            
-                            
+
+
                             }
 
                         </div>
@@ -123,8 +126,6 @@ const Admin = () => {
 
                 )}
             </div>
-
-
 
             <Footer />
         </>

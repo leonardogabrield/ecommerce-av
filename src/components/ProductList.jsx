@@ -1,6 +1,8 @@
 import React, { useContext, useState, useEffect } from 'react'
 import Product from './Product'
 import { CartContext } from '../context/CartContext'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import './ProductList.css'
 
 const ProductList = ({ scrollRef }) => {
@@ -47,15 +49,23 @@ const ProductList = ({ scrollRef }) => {
 
     return (
         <>
+
             <div className="mb-4 d-flex justify-content-center">
+        
+        <div className="wrapper-input position-relative">
                 <input
                     type="text"
-                    className="form-control search-field border-secondary-subtle"
+                    className="form-control search-field border-secondary-subtle ps-5"
                     placeholder="Buscar producto por nombre..."
                     value={busqueda}
                     onChange={(e) => setBusqueda(e.target.value)}
                 />
+                <FontAwesomeIcon icon={faMagnifyingGlass} className="text-secondary-subtle position-absolute top-50 start-0 translate-middle ms-4"/>
+</div>
+
             </div>
+
+
             <h2 className="h2 text-center mb-4 fw-normal">Listado de productos</h2>
             <div className="row row-cols-1 row-cols-md-3 row-cols-lg-5 g-5">
                 {

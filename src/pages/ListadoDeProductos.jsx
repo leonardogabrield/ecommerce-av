@@ -16,18 +16,16 @@ const ListadoDeProductos = () => {
       <div className="container">
         <main>
 
-
           <h1 className="display-3 text-center mx-5 pb-5 pt-5">Productos</h1>
           {
-            cargando ? <div className="text-center">
-              <div className="spinner-border" role="status">
-                <span className="visually-hidden">cargando...</span>
+            cargando
+              ? <div className="text-center">
+                <div className="spinner-border" role="status">
+                  <span className="visually-hidden">cargando...</span>
+                </div>
               </div>
-            </div> :
-
-              <ProductList scrollRef={refTopProductos} />
+              : <ProductList scrollRef={refTopProductos} />
           }
-
         </main>
       </div>
       <Footer />

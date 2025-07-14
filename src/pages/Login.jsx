@@ -8,26 +8,21 @@ const Login = () => {
 
   const { email, setEmail, password, setPassword, handleSubmit, setIsAuth } = useAuth();
 
-
   const [errors, setErrors] = useState({
     email: '',
     password: ''
   });
 
-
   const [isLoading, setIsLoading] = useState(false);
-
 
   const validateForm = () => {
     const newErrors = {};
-
 
     if (!email) {
       newErrors.email = 'El email es requerido';
     } else if (!/\S+@\S+\.\S+/.test(email)) {
       newErrors.email = 'El formato del email no es válido';
     }
-
 
     if (!password) {
       newErrors.password = 'La contraseña es requerida';
@@ -38,7 +33,6 @@ const Login = () => {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
-
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -54,9 +48,7 @@ const Login = () => {
     try {
       setIsLoading(true);
 
-
       const result = await handleSubmit(e);
-
 
       if (result && result.success) {
         setIsAuth(true);
@@ -74,7 +66,6 @@ const Login = () => {
     }
   };
 
-
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
     if (errors.email) {
@@ -91,14 +82,10 @@ const Login = () => {
 
   return (
 
-
     <>
       <Header />
       <div className="container mb-5 pb-5">
         <main>
-
-
-
 
           <div style={{ padding: '2rem' }}>
             <h2 className="h2 text-center mx-5 py-5 mb-5">Iniciar Sesión</h2>
@@ -126,7 +113,6 @@ const Login = () => {
                   {errors.general}
                 </div>
               )}
-
 
               <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <label htmlFor="formBasicEmail" style={{ marginBottom: '0.5rem', fontWeight: 'bold' }}>
@@ -158,7 +144,6 @@ const Login = () => {
                 )}
               </div>
 
-
               <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <label htmlFor="formBasicPassword" style={{ marginBottom: '0.5rem', fontWeight: 'bold' }}>
                   Password
@@ -189,7 +174,6 @@ const Login = () => {
                 )}
               </div>
 
-
               <button
                 type="submit"
                 disabled={isLoading}
@@ -209,12 +193,10 @@ const Login = () => {
             </form>
           </div>
 
-
         </main>
       </div>
       <Footer />
     </>
-
 
   );
 };

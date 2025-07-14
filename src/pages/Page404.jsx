@@ -9,10 +9,10 @@ const Page404 = () => {
       <Header />
       <div className="container text-secondary text-center">
         <main>
-      <h1 className="display-1 text-center my-5 py-5">404</h1>
-      <Link to='/' className="text-center mb-5 pb-5">Volver al inicio</Link>
-      <div className="d-block"></div>
-           </main>
+          <h1 className="display-1 text-center my-5 py-5">404</h1>
+          <Link to='/' className="text-center mb-5 pb-5">Volver al inicio</Link>
+          <div className="d-block"></div>
+        </main>
       </div>
       <Footer />
     </>

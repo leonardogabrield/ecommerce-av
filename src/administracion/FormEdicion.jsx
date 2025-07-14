@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
+
 function FormEdicion({ productoSeleccionado, onUpdate }) {
     const [producto, setProducto] = useState(productoSeleccionado);
 

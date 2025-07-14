@@ -1,9 +1,9 @@
-.search-field {
+.wrapper-input {
   width: 75%;
 }
 
 @media (min-width: 768px) {
-  .search-field {
+  .wrapper-input {
     width: 50%;
   }
 }

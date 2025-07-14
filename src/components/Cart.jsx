@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import './Cart.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { CartContext } from '../context/CartContext';
 import Swal from "sweetalert2";
 
@@ -33,7 +33,7 @@ const Cart = ({ isOpen, onClose, }) => {
 
                             <li key={item.id} className="border-bottom border-secondary">
                                 <p className="my-2">{item.title} ${item.price} - <small>Cant.: </small> {item.cantidad}
-                                    <a className="px-2 link-secondary" onClick={() => deleteFromCart(item)}><FontAwesomeIcon icon={faTrash} /></a></p>
+                                    <a className="px-2 link-secondary" onClick={() => deleteFromCart(item)}><FontAwesomeIcon icon={faTrashAlt} /></a></p>
                             </li>
 
                         ))}

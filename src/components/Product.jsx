@@ -1,6 +1,8 @@
 import React, { useState, useContext } from 'react'
 import { Link } from 'react-router-dom';
 import { CartContext } from '../context/CartContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 
 const Product = ({ producto }) => {
   const { add2Cart } = useContext(CartContext)
@@ -41,7 +43,7 @@ const Product = ({ producto }) => {
             <>
               <div className="d-flex justify-content-center align-items-center gap-2">
                 <button
-                  className="btn btn-secondary btn-small py-1"
+                  className="btn btn-secondary py-1 fw-semibold"
                   onClick={decrease}
                   disabled={cantidad <= 1}
                 >
@@ -49,7 +51,7 @@ const Product = ({ producto }) => {
                 </button>
                 <span>{cantidad}</span>
                 <button
-                  className="btn btn-secondary btn-small py-1"
+                  className="btn btn-secondary py-1 fw-semibold"
                   onClick={increase}
                   disabled={cantidad >= producto.stock}
                 >
@@ -68,10 +70,10 @@ const Product = ({ producto }) => {
 
         <div className="card-footer border-0">
           <button
-            className="btn btn-primary d-block mx-auto mt-auto mb-2"
+            className="btn btn-primary d-flex justify-content-center align-items-center mx-auto mt-auto mb-2 px-3"
             onClick={handleAdd2Cart}
           >
-            Agregar al carrito
+            Agregar <FontAwesomeIcon icon={faCartPlus} className="fs-5 ps-2" />
           </button>
         </div>
 
